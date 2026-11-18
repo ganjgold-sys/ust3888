@@ -1,0 +1,347 @@
+/* Hallmark · pre-emit critique: P4 H4 E4 S3 R4 V4 · weakest: S, one gold accent on every section still reads as a template; section compositions not yet varied (gate 32, open) */
+/* Hallmark · dismissed 41 · в светлой теме ink и surface сознаются одинаковым тоном всей секции, текст на нем тёмный bone-ink (контраст больше 7) */
+/* Hallmark · dismissed 49 · кнопки «Политика конфиденциальности» и «Записаться на консультацию» длиннее колонки на 375px, перенос строки здесь работает, nowrap дал бы вылез за край */
+/* Hallmark · dismissed 28a · фото команды стоят ниже первого экрана, LCP — статуэтка с fetchpriority */
+/* Hallmark · answered F15 · одна ширина контейнера 1680px, site-container-narrow оставлен как алиас для совместимости вызовов */
+@import "tailwindcss";
+
+/* ── Шрифты ─────────────────────────────────────────────────────────────
+   Самохостинг вместо Google Fonts: запрос к стороннему домену на критическом
+   пути замедляет первую отрисовку и создаёт зависимость от чужого сервиса.
+   Лежат в public/fonts, отдаются с нашего домена.
+
+   Spectral — заголовки: контрастная антиква с кириллицей, задаёт юридический
+   тон без ощущения «офисного» документа.
+   Golos Text — текст: современный гротеск с открытыми формами, хорошо читается
+   на тёмном фоне. Оба шрифта с полноценной кириллицей. */
+
+@font-face {
+  font-family: 'Spectral';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/spectral-400-normal-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Spectral';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/spectral-400-normal-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Spectral';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/spectral-600-normal-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Spectral';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/spectral-600-normal-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Spectral';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/spectral-700-normal-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Spectral';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/spectral-700-normal-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Spectral';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/spectral-400-italic-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Spectral';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/spectral-400-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Golos Text';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/golos-text-400-normal-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Golos Text';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/golos-text-400-normal-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ── Hallmark tokens ───────────────────────────────────────────────────
+   Единая палитра сайта. Все цвета в классах — имена отсюда
+   (text-gold, bg-ink, border-line …). Меняем цвет здесь, а не в компонентах. */
+@theme {
+  --nav-underline-content: "";
+  --color-ink: #0a0908;        /* фон страницы */
+  --color-accent-ink: #0a0908; /* текст на золотом акценте */
+  --color-ground: #0d0c0b;     /* шапка и подвал */
+  --color-panel: #100e0c;      /* поля ввода, вложенные блоки */
+  --color-surface: #17140f;    /* фон секций (на шаг светлее фона) */
+  --color-card: #181512;       /* карточки */
+  --color-raised: #1e1914;     /* приподнятые элементы, hover */
+  --color-line: #2e261d;       /* тонкие разделители */
+  --color-line-2: #3d3124;     /* границы карточек и кнопок */
+  --color-paper: #f5f2eb;      /* основной текст на тёмном */
+  --color-paper-2: #f5f0e6;    /* светлый штрих логотипа */
+  --color-muted: #a89f91;      /* вторичный текст */
+  --color-faint: #8c8275;      /* подписи, самый слабый текст (контраст 5.3 на ink) */
+  --color-gold: #c5a059;       /* бренд: акценты, кнопки */
+  --color-gold-soft: #d8bf84;  /* светлое золото для логотипа */
+  --color-gold-deep: #8a6a29;  /* золото на светлом фоне (контраст 4.5) */
+  --color-bone: #f5f3ee;       /* светлые секции */
+  --color-bone-card: #fbfaf6;  /* карточки на светлом фоне */
+  --color-bone-raised: #fdfcf9; /* приподнятые элементы на светлом */
+  --color-bone-line-2: #d6cfc1; /* границы карточек на светлом */
+  --color-bone-gold: #8a6a29;   /* золото на светлом фоне (контраст 4.5) */
+  --color-bone-gold-deep: #6f5520;
+  --color-bone-line: #e2ddd3;  /* разделители на светлом */
+  --color-bone-ink: #1a1713;   /* текст на светлом */
+  --color-bone-mute: #5c544a;
+  --color-bone-faint: #7a7268; /* подписи на светлом */  /* вторичный текст на светлом */
+  --color-ok: #22c55e;         /* успех */
+  --color-danger: #dc2626;     /* ошибка */
+  --color-brand-tg: #229ed9;   /* цвет Telegram */
+  --color-badge-dark: #1a1713; /* тёмная плашка номера дела */
+  /* Пара: антиква для заголовков, гротеск для текста. Оба с кириллицей. */
+  --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Golos Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* Две тени на весь сайт. Больше не нужно: на тёмном фоне глубокие тени
+     не читаются, они только мутят границы. */
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.28);
+  --shadow-deep: 0 20px 50px rgba(0, 0, 0, 0.55);
+  --shadow-glow-gold: 0 14px 36px rgba(197, 160, 89, 0.18);
+
+  /* Единый ритм движения: одна кривая на все переходы.
+     ease-out выбран потому, что элемент появляется резко и тормозит —
+     воспринимается как отклик, а не как анимация ради анимации. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+}
+
+
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Заголовки антиквой, текст гротеском. Размеры — из шкалы ниже. */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Клавиатурный фокус. Без этого по сайту нельзя ходить с Tab:
+     outline: none на body убивает видимый фокус полностью. */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Мышью рамка не нужна — она мешает на кнопках */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Градиентный текст убран (гейт 2b): золото сплошным цветом, класс text-gold */
+
+.gold-btn {
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold) 50%, var(--color-gold-deep) 100%);
+  color: var(--color-ground);
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 4px 20px color-mix(in oklab, var(--color-gold) 25%, transparent);
+}
+
+.gold-btn:hover {
+  background: linear-gradient(135deg, var(--color-gold-soft) 0%, var(--color-gold) 50%, var(--color-gold) 100%);
+  box-shadow: 0 6px 25px color-mix(in oklab, var(--color-gold) 40%, transparent);
+  transform: translateY(-1px);
+}
+
+.gold-outline-btn {
+  background: transparent;
+  color: var(--color-paper);
+  border: 1px solid var(--color-gold);
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 200ms;
+}
+
+.gold-outline-btn:hover {
+  background: var(--color-gold);
+  color: var(--color-ground);
+}
+
+.theme-light .gold-outline-btn {
+  color: var(--color-bone-ink);
+  border: 1px solid var(--color-gold-deep);
+}
+
+.theme-light .gold-outline-btn:hover {
+  background: var(--color-gold-deep);
+  color: var(--color-bone-card);
+}
+
+.gold-border-card {
+  background: var(--color-surface);
+  color: var(--color-paper);
+  border: 1px solid color-mix(in oklab, var(--color-gold) 25%, transparent);
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.gold-border-card:hover {
+  border-color: color-mix(in oklab, var(--color-gold) 50%, transparent);
+  box-shadow: 0 10px 30px color-mix(in oklab, var(--color-ink) 50%, transparent);
+}
+
+/* Лёгкие CSS-анимации вместо библиотеки motion (экономия ~42 КБ gzip на первом экране) */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ── Адаптивный контейнер ──────────────────────────────────────────────
+   Раньше все секции были зажаты в max-w-7xl (1280px) и на мониторах
+   1920px+ выглядели узкой колонкой по центру. Теперь ширина тянется
+   до 1680px, а боковые отступы растут плавно вместе с экраном. */
+.site-container {
+  width: 100%;
+  max-width: 1920px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 6rem);
+}
+
+/* Тот же контейнер: отдельных ширин на странице быть не должно (гейт F15) */
+.site-container-narrow {
+  width: 100%;
+  max-width: 1920px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 6rem);
+}
+
+/* ── Читаемость на мониторах ──────────────────────────────────────────────
+   На широком экране базовый шрифт 16px и контейнер 1680px дают мелкий текст
+   и слишком длинные строки. Поднимаем корневой размер: Tailwind считает всё
+   в rem, поэтому вместе с текстом пропорционально растут отступы и элементы.
+   1240–1560px → 17.5px, от 1560px → 18.5px. На телефоне остаётся 16px. */
+@media (min-width: 1240px) {
+  html { font-size: 17.5px; }
+}
+@media (min-width: 1560px) {
+  html { font-size: 18.5px; }
+}
+
+/* Контент внутри секций не должен упираться в 1024px:
+   при 18px шрифте это даёт около 100 символов в строке и выглядит узко. */
+@media (min-width: 1240px) {
+  .site-container,
+  .site-container-narrow {
+    padding-inline: clamp(2rem, 2.5vw, 3.5rem);
+  }
+}
+
+@media (min-width: 1920px) {
+  .site-container,
+  .site-container-narrow { max-width: 1800px; }
+}
+
+/* На широких мониторах сетки карточек могут позволить себе больше колонок —
+   иначе контент растягивается в слишком длинные ряды */
+@media (min-width: 1536px) {
+  .grid-wide-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .grid-wide-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Текст в первом экране не должен растягиваться на всю ширину */
+@media (min-width: 1280px) {
+  .hero-copy { max-width: 46rem; }
+}
+
+
+/* ── Чередование фонов секций ─────────────────────────────────────────
+   Тёмная и светлая тема: внутри секции переназначаются токены, поэтому
+   карточки, текст и линии меняются вместе с фоном, без правки компонентов.
+   Порядок секций: тёмная → светлая → тёмная … (см. README). */
+.theme-light {
+  --color-ink: var(--color-bone);
+  --color-ground: var(--color-bone);
+  --color-panel: var(--color-bone);
+  --color-surface: var(--color-bone);
+  --color-card: var(--color-bone-card);
+  --color-raised: var(--color-bone-raised);
+  --color-line: var(--color-bone-line);
+  --color-line-2: var(--color-bone-line-2);
+  --color-paper: var(--color-bone-ink);
+  --color-muted: var(--color-bone-mute);
+  --color-faint: var(--color-bone-faint);
+  --color-gold: var(--color-bone-gold);
+  --color-gold-deep: var(--color-bone-gold-deep);
+  background-color: var(--color-bone);
+  color: var(--color-bone-ink);
+}

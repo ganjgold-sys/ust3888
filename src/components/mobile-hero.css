@@ -1,0 +1,265 @@
+/* Шрифты макета. Лежат локально, сторонних запросов нет. */
+@font-face {
+  font-family: 'UstSerif';
+  src: url('/fonts/ust-serif-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'UstSans';
+  src: url('/fonts/ust-sans-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'UstSans';
+  src: url('/fonts/ust-sans-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ------------------------------------------------------------------
+   Масштаб и заполнение экрана
+
+   Макет нарисован в сетке 390 × 693. Одна единица --u — это 1 пиксель
+   этой сетки. --u ограничен тремя величинами:
+     • ширина экрана  — макет не шире 430 px,
+     • 430 / 390      — предел увеличения на широких телефонах,
+     • высота / 693   — на коротком экране макет уменьшается целиком,
+                        а не обрезается по нижнему краю.
+   Остаток высоты --e = 100svh − 693·u распределяется по группам холста
+   через translateY в компоненте: заголовок поднимается меньше всех,
+   кнопки и волна — на всю величину остатка.
+   ------------------------------------------------------------------ */
+.mt {
+  display: none;
+  --vh: 100vh;
+  --u: calc(min(100vw, 430px, calc(var(--vh) * 390 / 693)) / 390);
+  --e: max(0px, calc(var(--vh) - var(--u) * 693));
+}
+
+@supports (height: 100svh) {
+  .mt {
+    --vh: 100svh;
+  }
+}
+
+/* До 768 px в портретной ориентации блок заменяет шапку и герой сайта */
+@media (max-width: 767px) and (orientation: portrait) {
+  .mt {
+    display: block;
+  }
+  .mt-covered {
+    display: none;
+  }
+}
+
+.mt * {
+  box-sizing: border-box;
+}
+
+/* Шапка: фиксированная, стоит поверх холста */
+.mt-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: calc(var(--u) * 390);
+  height: calc(var(--u) * 62);
+  background: #141107;
+  z-index: 40;
+}
+
+/* Холст: ровно один экран. Высота = макет + остаток, иначе overflow:hidden
+   обрезал бы блоки, сдвинутые вниз на --e */
+.mt-canvas {
+  position: relative;
+  width: calc(var(--u) * 390);
+  height: calc(var(--u) * 693 + var(--e));
+  margin: 0 auto;
+  overflow: hidden;
+  background: linear-gradient(180deg, #141107, #110e07);
+}
+
+/* Текстовый слой: абсолютное позиционирование по координатам макета */
+.mt-t {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  letter-spacing: normal;
+  text-transform: none;
+  font-variant: normal;
+  text-decoration: none;
+  font-kerning: normal;
+  pointer-events: none;
+}
+
+.mt-serif {
+  font-family: 'UstSerif', Georgia, serif;
+  font-weight: 700;
+}
+.mt-sans4 {
+  font-family: 'UstSans', Arial, sans-serif;
+  font-weight: 400;
+}
+.mt-sans7 {
+  font-family: 'UstSans', Arial, sans-serif;
+  font-weight: 700;
+}
+
+/* Заголовки — невидимая рамка холста: текст внутри задан по координатам */
+.mt-h {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(var(--u) * 390);
+  height: calc(var(--u) * 693);
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  pointer-events: none;
+}
+
+.mt-tile {
+  position: absolute;
+  display: block;
+  margin: 0;
+  padding: 0;
+  background: #231b0e;
+  border: 1px solid #2f291b;
+  border-radius: calc(var(--u) * 8);
+  cursor: pointer;
+  text-decoration: none;
+  font: inherit;
+}
+
+.mt-card {
+  position: absolute;
+  display: block;
+  margin: 0;
+  background: #1e1a0e;
+  border: 1px solid rgba(255, 240, 225, 0.32);
+  border-radius: calc(var(--u) * 12);
+}
+
+.mt-card .mt-t,
+.mt-card .mt-ic,
+.mt-card .mt-vr {
+  position: absolute;
+}
+
+.mt-vr {
+  position: absolute;
+  display: block;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(229, 198, 145, 0),
+    rgba(229, 198, 145, 0.5) 18%,
+    rgba(229, 198, 145, 0.5) 82%,
+    rgba(229, 198, 145, 0)
+  );
+}
+
+.mt-vr--dark {
+  background: #6f6657;
+}
+
+.mt-btn {
+  position: absolute;
+  display: block;
+  margin: 0;
+  background: #fdf3e7;
+  border-radius: calc(var(--u) * 16);
+  text-decoration: none;
+  color: #080300;
+}
+
+.mt-btn .mt-t,
+.mt-btn .mt-ic,
+.mt-btn .mt-vr {
+  position: absolute;
+}
+
+.mt-pill {
+  position: absolute;
+  display: block;
+  border: 1.5px solid #f0ce90;
+  border-radius: 999px;
+}
+
+.mt-rule {
+  position: absolute;
+  display: block;
+}
+
+.mt-ic {
+  position: absolute;
+  display: block;
+  overflow: visible;
+}
+
+.mt-sep {
+  position: absolute;
+  display: block;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 240, 225, 0),
+    rgba(255, 240, 225, 0.23) 50%,
+    rgba(255, 240, 225, 0)
+  );
+}
+
+.mt-wave {
+  position: absolute;
+  display: block;
+  overflow: visible;
+}
+
+/* Меню разделов: раскрывается под шапкой */
+.mt-panel {
+  position: fixed;
+  top: calc(var(--u) * 62);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: calc(var(--u) * 390);
+  background: #141107;
+  border-bottom: 1px solid #2f291b;
+  padding: calc(var(--u) * 6) calc(var(--u) * 24) calc(var(--u) * 14);
+  z-index: 39;
+  display: flex;
+  flex-direction: column;
+}
+
+.mt-panel[hidden] {
+  display: none;
+}
+
+.mt-panel a {
+  font-family: 'UstSans', Arial, sans-serif;
+  font-weight: 400;
+  font-size: calc(var(--u) * 16);
+  line-height: calc(var(--u) * 44);
+  color: #fdfaf3;
+  text-decoration: none;
+  border-bottom: 1px solid #2f291b;
+}
+
+.mt-panel a:last-child {
+  border-bottom: 0;
+  color: #e5c691;
+}
+
+/* Уважение к системной настройке «меньше движения» */
+@media (prefers-reduced-motion: reduce) {
+  .mt * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

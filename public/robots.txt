@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://ust38.ru/sitemap.xml
+Host: ust38.ru
